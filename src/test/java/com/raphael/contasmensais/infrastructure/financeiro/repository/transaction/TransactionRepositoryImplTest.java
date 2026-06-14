@@ -1,10 +1,11 @@
 package com.raphael.contasmensais.infrastructure.financeiro.repository.transaction;
 
-import com.raphael.contasmensais.config.JpaAuditingTestConfig;
 import com.raphael.contasmensais.domain.financeiro.entity.Category;
 import com.raphael.contasmensais.domain.financeiro.entity.Transaction;
 import com.raphael.contasmensais.domain.financeiro.repository.category.CategoryRepository;
 import com.raphael.contasmensais.domain.financeiro.repository.transaction.TransactionRepository;
+import com.raphael.contasmensais.infrastructure.financeiro.repository.category.CategoryRepositoryImpl;
+import com.raphael.contasmensais.infrastructure.financeiro.repository.transaction.TransactionRepositoryImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-@Import(JpaAuditingTestConfig.class)
+@Import({CategoryRepositoryImpl.class, TransactionRepositoryImpl.class})
 class TransactionRepositoryImplTest {
 
     @Autowired

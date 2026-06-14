@@ -1,8 +1,8 @@
 package com.raphael.contasmensais.infrastructure.financeiro.repository.category;
 
-import com.raphael.contasmensais.config.JpaAuditingTestConfig;
 import com.raphael.contasmensais.domain.financeiro.entity.Category;
 import com.raphael.contasmensais.domain.financeiro.repository.category.CategoryRepository;
+import com.raphael.contasmensais.infrastructure.financeiro.repository.category.CategoryRepositoryImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -14,7 +14,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-@Import(JpaAuditingTestConfig.class)
+@Import(CategoryRepositoryImpl.class)
 class CategoryRepositoryImplTest {
 
     @Autowired
