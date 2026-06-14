@@ -70,6 +70,31 @@ In Docker: the `db` service is `postgres:15-alpine`, database name `contasmensai
 
 Schema is managed by **Flyway** (`db/migration/`). `ddl-auto=validate` — Hibernate only validates, never modifies the schema. Migration files follow the `V{n}__{description}.sql` naming convention.
 
+## Tests
+
+Tests mirror the `src/main` package structure under `src/test`.
+
+```
+test/
+  config/
+    JpaAuditingTestConfig.java     enables @EnableJpaAuditing for @DataJpaTest contexts
+  service/
+    financeiro/
+      category/   CategoryServiceTest
+      transaction/ TransactionServiceTest
+  infrastructure/
+    financeiro/
+      repository/
+        category/    CategoryRepositoryImplTest
+        transaction/ TransactionRepositoryImplTest
+```
+
+**Service tests** — JUnit 5 + Mockito (`@ExtendWith(MockitoExtension.class)`). No Spring context. Dependencies mocked with `@Mock`, service instantiated with `@InjectMocks`. `@Validated`/`@Valid` is not enforced here (no AOP proxy) — only business logic is tested.
+
+**Repository tests** — `@DataJpaTest`. Spring loads only JPA layer (entities, repositories). Uses H2 in-memory database; Flyway is replaced by `ddl-auto=create-drop`. `JpaAuditingTestConfig` is imported to enable `createdAt`/`updatedAt` population. Tests target the domain `CategoryRepository`/`TransactionRepository` interfaces (implemented by the `*RepositoryImpl` beans).
+
+Dependencies added for tests: `testRuntimeOnly 'com.h2database:h2'`.
+
 ## Hot Reload (Docker)
 
 The `api` service mounts the project as a volume and runs `./gradlew bootRun`. Spring Boot DevTools watches `build/classes/` for changes. The VS Code Java extension compiles in the background automatically — saving a file triggers recompile → DevTools restarts the app.

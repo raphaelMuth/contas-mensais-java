@@ -1,0 +1,161 @@
+{
+  "info": {
+    "name": "Contas Mensais API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    }
+  ],
+  "item": [
+    {
+      "name": "Categories",
+      "item": [
+        {
+          "name": "List all categories",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/categories"
+          }
+        },
+        {
+          "name": "Get category by ID",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/categories/1"
+          }
+        },
+        {
+          "name": "Create category",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/categories",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Alimentação\",\n  \"description\": \"Gastos com comida e restaurantes\",\n  \"icon\": \"🍔\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Update category",
+          "request": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/categories/1",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Alimentação\",\n  \"description\": \"Atualizado: gastos com comida\",\n  \"icon\": \"🍕\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete category",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/categories/1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Transactions",
+      "item": [
+        {
+          "name": "List transactions by user",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/transactions?userId=1",
+              "host": ["{{baseUrl}}"],
+              "path": ["transactions"],
+              "query": [
+                {
+                  "key": "userId",
+                  "value": "1"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get transaction by ID",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/transactions/1"
+          }
+        },
+        {
+          "name": "Create transaction (existing category)",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/transactions",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 49.90,\n  \"transactionDate\": \"2026-06-14\",\n  \"description\": \"Almoço no restaurante\",\n  \"externalId\": null,\n  \"userId\": 1,\n  \"category\": {\n    \"id\": 1,\n    \"name\": null,\n    \"description\": null,\n    \"icon\": null\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "Create transaction (new category)",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/transactions",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 120.00,\n  \"transactionDate\": \"2026-06-14\",\n  \"description\": \"Conta de luz\",\n  \"externalId\": \"EXT-001\",\n  \"userId\": 1,\n  \"category\": {\n    \"id\": null,\n    \"name\": \"Contas\",\n    \"description\": \"Contas fixas mensais\",\n    \"icon\": \"💡\"\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "Update transaction",
+          "request": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/transactions/1",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 55.00,\n  \"transactionDate\": \"2026-06-14\",\n  \"description\": \"Almoço atualizado\",\n  \"externalId\": null,\n  \"userId\": 1,\n  \"category\": {\n    \"id\": 1,\n    \"name\": null,\n    \"description\": null,\n    \"icon\": null\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete transaction",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/transactions/1"
+          }
+        }
+      ]
+    }
+  ]
+}

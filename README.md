@@ -60,6 +60,40 @@ Novos contextos (ex: `usuario`) seguem o mesmo padrão nas quatro camadas.
 
 Gerenciadas pelo **Flyway**. Os scripts ficam em `src/main/resources/db/migration/` com a nomenclatura `V{n}__{descricao}.sql`. O Hibernate está configurado com `ddl-auto=validate` — ele apenas valida o schema, nunca o modifica.
 
+## Testes
+
+A estrutura de testes espelha a estrutura de `src/main`:
+
+```
+src/test/
+  config/                         JpaAuditingTestConfig (suporte para @DataJpaTest)
+  service/financeiro/
+    category/                     CategoryServiceTest
+    transaction/                  TransactionServiceTest
+  infrastructure/financeiro/repository/
+    category/                     CategoryRepositoryImplTest
+    transaction/                  TransactionRepositoryImplTest
+```
+
+### Decisões
+
+| Camada | Estratégia | Ferramentas |
+|---|---|---|
+| Services | Teste unitário, sem contexto Spring | JUnit 5 + Mockito |
+| Repositories | Teste de integração com banco em memória | JUnit 5 + `@DataJpaTest` + H2 |
+
+**Services** usam `@ExtendWith(MockitoExtension.class)`: dependências são mockadas com `@Mock`, o serviço instanciado com `@InjectMocks`. Sem proxy Spring, `@Valid`/`@Validated` não é aplicado — apenas a lógica de negócio é testada.
+
+**Repositories** usam `@DataJpaTest`: Spring sobe apenas a camada JPA com banco H2 em memória. O Flyway é substituído por `ddl-auto=create-drop`. Os testes usam a interface de domínio (`CategoryRepository`, `TransactionRepository`) — os `*RepositoryImpl` são carregados automaticamente por serem `@Repository`.
+
+```bash
+# Rodar todos os testes
+./gradlew test
+
+# Rodar uma classe específica
+./gradlew test --tests "com.raphael.contasmensais.service.financeiro.category.CategoryServiceTest"
+```
+
 ## Como rodar
 
 ### Com Docker (recomendado)

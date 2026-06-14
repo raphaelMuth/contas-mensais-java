@@ -1,6 +1,7 @@
 services:
   db:
     image: postgres:15-alpine
+    pull_policy: never
     environment:
       POSTGRES_DB: contasmensais
       POSTGRES_USER: postgres
@@ -12,6 +13,7 @@ services:
 
   api:
     image: eclipse-temurin:21-jdk-alpine
+    pull_policy: never
     working_dir: /app
     command: ./gradlew bootRun --no-daemon
     ports:
