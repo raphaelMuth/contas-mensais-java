@@ -33,29 +33,42 @@ docker compose up
 
 Package root: `com.raphael.contasmensais`
 
-The project follows DDD Bounded Contexts split into three top-level packages:
+The project follows DDD Bounded Contexts aligned with Clean Architecture, split into four top-level packages:
 
 ```
 domain/               pure domain model, no framework dependencies
-  financeiro/         bounded context: financial
+  financeiro/
     entity/           JPA entities (Category, Transaction, BaseEntity)
+    repository/       domain repository interfaces — one subfolder per entity
+      category/       CategoryRepository
+      transaction/    TransactionRepository
+
+service/              use cases / application logic — orchestrates domain, no HTTP/JPA knowledge
+  financeiro/
 
 api/                  REST layer (controllers, DTOs, request/response mapping)
   financeiro/
 
-infrastructure/       persistence implementations (JPA repositories, configs)
+infrastructure/       persistence implementations
   financeiro/
+    repository/       one subfolder per entity
+      category/       CategoryJpaRepository (package-private), CategoryRepositoryImpl
+      transaction/    TransactionJpaRepository (package-private), TransactionRepositoryImpl
 ```
 
-Each bounded context lives in all three layers under the same context name (`financeiro`). New contexts (e.g. `usuario`) follow the same pattern.
+Dependency direction: `api` → `service` → `domain` ← `infrastructure`. Each bounded context lives in all four layers under the same context name. New contexts (e.g. `usuario`) and new entities follow the same per-subfolder pattern.
+
+Services are plain classes annotated with `@Service` (no interface). Cross-service dependencies are allowed — `TransactionService` depends on `CategoryService`. The Unit of Work is enforced via `@Transactional`: all operations within an annotated method participate in a single database transaction (default propagation = REQUIRED). Read-only methods use `@Transactional(readOnly = true)` for performance.
 
 `BaseEntity` (in `domain/financeiro/entity`) is a `@MappedSuperclass` providing `createdAt` and `updatedAt` via JPA Auditing — all entities extend it. `@EnableJpaAuditing` is on `ContasMensaisApplication`.
+
+The `*JpaRepository` interfaces are package-private — they are internal to the infrastructure package and only used by their paired `*RepositoryImpl`.
 
 ## Database
 
 In Docker: the `db` service is `postgres:15-alpine`, database name `contasmensais`.
 
-`spring.jpa.hibernate.ddl-auto=update` is active — schema is auto-managed by Hibernate in development. For production, switch to `validate` and use migration scripts.
+Schema is managed by **Flyway** (`db/migration/`). `ddl-auto=validate` — Hibernate only validates, never modifies the schema. Migration files follow the `V{n}__{description}.sql` naming convention.
 
 ## Hot Reload (Docker)
 
