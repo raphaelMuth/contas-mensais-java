@@ -36,7 +36,7 @@ Package root: `com.raphael.contasmensais`
 The project follows DDD Bounded Contexts aligned with Clean Architecture, split into four top-level packages:
 
 ```
-domain/               pure domain model, no framework dependencies
+entity/               pure domain model, no framework dependencies
   financeiro/
     entity/           JPA entities (Category, Transaction, BaseEntity)
     repository/       domain repository interfaces — one subfolder per entity
@@ -56,11 +56,11 @@ infrastructure/       persistence implementations
       transaction/    TransactionJpaRepository (package-private), TransactionRepositoryImpl
 ```
 
-Dependency direction: `api` → `service` → `domain` ← `infrastructure`. Each bounded context lives in all four layers under the same context name. New contexts (e.g. `usuario`) and new entities follow the same per-subfolder pattern.
+Dependency direction: `api` → `service` → `entity` ← `infrastructure`. Each bounded context lives in all four layers under the same context name. New contexts (e.g. `usuario`) and new entities follow the same per-subfolder pattern.
 
 Services are plain classes annotated with `@Service` (no interface). Cross-service dependencies are allowed — `TransactionService` depends on `CategoryService`. The Unit of Work is enforced via `@Transactional`: all operations within an annotated method participate in a single database transaction (default propagation = REQUIRED). Read-only methods use `@Transactional(readOnly = true)` for performance.
 
-`BaseEntity` (in `domain/financeiro/entity`) is a `@MappedSuperclass` providing `createdAt` and `updatedAt` via JPA Auditing — all entities extend it. `@EnableJpaAuditing` is on `ContasMensaisApplication`.
+`BaseEntity` (in `entity/financeiro/entity`) is a `@MappedSuperclass` providing `createdAt` and `updatedAt` via JPA Auditing — all entities extend it. `@EnableJpaAuditing` is on `ContasMensaisApplication`.
 
 The `*JpaRepository` interfaces are package-private — they are internal to the infrastructure package and only used by their paired `*RepositoryImpl`.
 
@@ -76,8 +76,6 @@ Tests mirror the `src/main` package structure under `src/test`.
 
 ```
 test/
-  config/
-    JpaAuditingTestConfig.java     enables @EnableJpaAuditing for @DataJpaTest contexts
   service/
     financeiro/
       category/   CategoryServiceTest
@@ -91,7 +89,7 @@ test/
 
 **Service tests** — JUnit 5 + Mockito (`@ExtendWith(MockitoExtension.class)`). No Spring context. Dependencies mocked with `@Mock`, service instantiated with `@InjectMocks`. `@Validated`/`@Valid` is not enforced here (no AOP proxy) — only business logic is tested.
 
-**Repository tests** — `@DataJpaTest`. Spring loads only JPA layer (entities, repositories). Uses H2 in-memory database; Flyway is replaced by `ddl-auto=create-drop`. `JpaAuditingTestConfig` is imported to enable `createdAt`/`updatedAt` population. Tests target the domain `CategoryRepository`/`TransactionRepository` interfaces (implemented by the `*RepositoryImpl` beans).
+**Repository tests** — `@DataJpaTest`. Spring loads only JPA layer (entities, repositories). Uses H2 in-memory database; Flyway is replaced by `ddl-auto=create-drop`. JPA Auditing is handled automatically by `@DataJpaTest` in Spring Boot 3.x. `*RepositoryImpl` beans must be imported explicitly via `@Import` — they are not Spring Data JPA interfaces and are not auto-loaded by the slice. Tests target the `CategoryRepository`/`TransactionRepository` domain interfaces.
 
 Dependencies added for tests: `testRuntimeOnly 'com.h2database:h2'`.
 

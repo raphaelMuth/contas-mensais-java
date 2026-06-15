@@ -1,9 +1,9 @@
 package com.raphael.contasmensais.infrastructure.financeiro.repository.transaction;
 
-import com.raphael.contasmensais.domain.financeiro.entity.Category;
-import com.raphael.contasmensais.domain.financeiro.entity.Transaction;
-import com.raphael.contasmensais.domain.financeiro.repository.category.CategoryRepository;
-import com.raphael.contasmensais.domain.financeiro.repository.transaction.TransactionRepository;
+import com.raphael.contasmensais.entity.financeiro.entity.Category;
+import com.raphael.contasmensais.entity.financeiro.entity.Transaction;
+import com.raphael.contasmensais.entity.financeiro.repository.category.CategoryRepository;
+import com.raphael.contasmensais.entity.financeiro.repository.transaction.TransactionRepository;
 import com.raphael.contasmensais.infrastructure.financeiro.repository.category.CategoryRepositoryImpl;
 import com.raphael.contasmensais.infrastructure.financeiro.repository.transaction.TransactionRepositoryImpl;
 import org.junit.jupiter.api.BeforeEach;

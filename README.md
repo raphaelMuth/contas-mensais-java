@@ -19,7 +19,7 @@ O projeto combina **DDD Bounded Contexts** com **Clean Architecture**, separado 
 
 ```
 com.raphael.contasmensais/
-  domain/               modelo de domínio puro (entidades, interfaces de repositório)
+  entity/               modelo de domínio puro (entidades, interfaces de repositório)
     financeiro/
       entity/           BaseEntity, Category, Transaction
       repository/
@@ -45,7 +45,7 @@ com.raphael.contasmensais/
         transaction/    TransactionJpaRepository (package-private), TransactionRepositoryImpl
 ```
 
-Fluxo de dependências: `api` → `service` → `domain` ← `infrastructure`
+Fluxo de dependências: `api` → `service` → `entity` ← `infrastructure`
 
 Cada entidade nova ganha uma subpasta própria dentro de `repository/` e `service/` em ambas as camadas.
 

@@ -1,6 +1,6 @@
-package com.raphael.contasmensais.domain.financeiro.repository.category;
+package com.raphael.contasmensais.entity.financeiro.repository.category;
 
-import com.raphael.contasmensais.domain.financeiro.entity.Category;
+import com.raphael.contasmensais.entity.financeiro.entity.Category;
 
 import java.util.List;
 import java.util.Optional;

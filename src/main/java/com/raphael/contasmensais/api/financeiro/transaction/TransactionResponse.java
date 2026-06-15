@@ -1,7 +1,7 @@
 package com.raphael.contasmensais.api.financeiro.transaction;
 
 import com.raphael.contasmensais.api.financeiro.category.CategoryResponse;
-import com.raphael.contasmensais.domain.financeiro.entity.Transaction;
+import com.raphael.contasmensais.entity.financeiro.entity.Transaction;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

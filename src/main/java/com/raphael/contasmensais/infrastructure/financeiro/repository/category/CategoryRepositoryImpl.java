@@ -1,7 +1,7 @@
 package com.raphael.contasmensais.infrastructure.financeiro.repository.category;
 
-import com.raphael.contasmensais.domain.financeiro.entity.Category;
-import com.raphael.contasmensais.domain.financeiro.repository.category.CategoryRepository;
+import com.raphael.contasmensais.entity.financeiro.entity.Category;
+import com.raphael.contasmensais.entity.financeiro.repository.category.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

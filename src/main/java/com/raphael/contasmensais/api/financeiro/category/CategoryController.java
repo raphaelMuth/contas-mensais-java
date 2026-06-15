@@ -1,6 +1,6 @@
 package com.raphael.contasmensais.api.financeiro.category;
 
-import com.raphael.contasmensais.domain.financeiro.entity.Category;
+import com.raphael.contasmensais.entity.financeiro.entity.Category;
 import com.raphael.contasmensais.service.financeiro.category.CategoryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

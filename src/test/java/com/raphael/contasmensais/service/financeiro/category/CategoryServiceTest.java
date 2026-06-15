@@ -1,7 +1,7 @@
 package com.raphael.contasmensais.service.financeiro.category;
 
-import com.raphael.contasmensais.domain.financeiro.entity.Category;
-import com.raphael.contasmensais.domain.financeiro.repository.category.CategoryRepository;
+import com.raphael.contasmensais.entity.financeiro.entity.Category;
+import com.raphael.contasmensais.entity.financeiro.repository.category.CategoryRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

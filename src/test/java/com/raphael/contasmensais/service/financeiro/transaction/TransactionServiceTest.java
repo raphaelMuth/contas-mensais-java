@@ -1,8 +1,8 @@
 package com.raphael.contasmensais.service.financeiro.transaction;
 
-import com.raphael.contasmensais.domain.financeiro.entity.Category;
-import com.raphael.contasmensais.domain.financeiro.entity.Transaction;
-import com.raphael.contasmensais.domain.financeiro.repository.transaction.TransactionRepository;
+import com.raphael.contasmensais.entity.financeiro.entity.Category;
+import com.raphael.contasmensais.entity.financeiro.entity.Transaction;
+import com.raphael.contasmensais.entity.financeiro.repository.transaction.TransactionRepository;
 import com.raphael.contasmensais.service.financeiro.category.CategoryService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,7 +1,7 @@
 package com.raphael.contasmensais.api.financeiro.transaction;
 
-import com.raphael.contasmensais.domain.financeiro.entity.Category;
-import com.raphael.contasmensais.domain.financeiro.entity.Transaction;
+import com.raphael.contasmensais.entity.financeiro.entity.Category;
+import com.raphael.contasmensais.entity.financeiro.entity.Transaction;
 import com.raphael.contasmensais.service.financeiro.transaction.TransactionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

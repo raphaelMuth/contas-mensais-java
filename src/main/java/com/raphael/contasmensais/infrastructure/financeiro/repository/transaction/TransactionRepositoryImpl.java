@@ -1,7 +1,7 @@
 package com.raphael.contasmensais.infrastructure.financeiro.repository.transaction;
 
-import com.raphael.contasmensais.domain.financeiro.entity.Transaction;
-import com.raphael.contasmensais.domain.financeiro.repository.transaction.TransactionRepository;
+import com.raphael.contasmensais.entity.financeiro.entity.Transaction;
+import com.raphael.contasmensais.entity.financeiro.repository.transaction.TransactionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

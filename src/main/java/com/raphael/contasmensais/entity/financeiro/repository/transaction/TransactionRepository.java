@@ -1,6 +1,6 @@
-package com.raphael.contasmensais.domain.financeiro.repository.transaction;
+package com.raphael.contasmensais.entity.financeiro.repository.transaction;
 
-import com.raphael.contasmensais.domain.financeiro.entity.Transaction;
+import com.raphael.contasmensais.entity.financeiro.entity.Transaction;
 
 import java.util.List;
 import java.util.Optional;

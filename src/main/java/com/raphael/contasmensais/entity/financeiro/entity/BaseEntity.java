@@ -1,4 +1,4 @@
-package com.raphael.contasmensais.domain.financeiro.entity;
+package com.raphael.contasmensais.entity.financeiro.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
